@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:fitsSystemWindows="true"
+                tools:title="title" />
+        </com.google.android.material.appbar.AppBarLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/padding_small"
+        android:layout_marginEnd="16dp"
+        app:cardCornerRadius="25dp"
+        app:cardElevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+        app:layout_constraintWidth_max="@dimen/search_card_max_width">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_url"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:hint="test"
+                android:imeOptions="actionSearch"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:lines="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+            <ImageView
+                android:id="@+id/btnForward"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:contentDescription="test"
+                android:padding="4dp"
+                android:src="@drawable/ic_forward"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+        <WebView
+            android:id="@+id/vw_web"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintBottom_toBottomOf="parent">
+        </WebView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+

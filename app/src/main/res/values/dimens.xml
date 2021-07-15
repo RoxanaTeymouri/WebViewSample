@@ -1,0 +1,28 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+
+
+    <dimen name="padding_very_tiny">2dp</dimen>
+    <dimen name="padding_tiny">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_default">16dp</dimen>
+    <dimen name="padding_medium">24dp</dimen>
+    <dimen name="padding_large">32dp</dimen>
+    <dimen name="padding_huge">48dp</dimen>
+    <dimen name="padding_extreme">64dp</dimen>
+
+
+    <dimen name="search_card_max_width">500dp</dimen>
+
+    <!-- Text sizes -->
+    <dimen name="text_tiny">9sp</dimen>
+    <dimen name="text_smaller">12sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_default">18sp</dimen>
+    <dimen name="text_medium">24sp</dimen>
+    <dimen name="text_large">36sp</dimen>
+
+
+
+
+</resources>

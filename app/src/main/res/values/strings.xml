@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_top_list">Top List</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- Alert Setting Dialog-->
+    <string name="alert_dialog_setting_text">"Are you sure you want to block Image of web site?"</string>
+    <string name="alert_dialog_setting_btn_positive">Yes</string>
+    <string name="alert_dialog_setting_btn_negative">No</string>
+
+    <!-- Alert Top List Dialog-->
+    <string name="alert_dialog_top_list_text">"The last 5 domains"</string>
+
+</resources>
