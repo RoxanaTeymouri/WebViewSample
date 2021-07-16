@@ -7,7 +7,6 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
@@ -18,5 +17,10 @@
 
     <!-- Alert Top List Dialog-->
     <string name="alert_dialog_top_list_text">"The last 5 domains"</string>
+
+    <!-- Edit Text-->
+    <string name="hit_edit_text">Enter URL like : www.eyeo.com</string>
+
+
 
 </resources>

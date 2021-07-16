@@ -88,16 +88,10 @@ public class FirstFragment extends Fragment {
     void showTopListDialog() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity(), R.style.TopTenDialogTheme);
         builderSingle.setTitle(Html.fromHtml("<b>" + getString(R.string.alert_dialog_top_list_text) + "</b>"));
-        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
         builderSingle.show();

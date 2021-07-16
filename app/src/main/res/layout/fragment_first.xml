@@ -46,7 +46,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
-                android:hint="test"
+                android:hint="@string/hit_edit_text"
                 android:imeOptions="actionSearch"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
