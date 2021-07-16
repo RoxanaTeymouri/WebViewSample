@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,6 +26,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static android.content.Context.BLOB_STORE_SERVICE;
 import static android.content.Context.MODE_PRIVATE;
 import static com.roksanateimouri.myapplication.util.Constant.BASE_URL;
@@ -37,6 +43,7 @@ public class FirstFragment extends Fragment {
     private SharedPreferences preferences;
     private ArrayAdapter<String> arrayAdapter;
     private ProgressBar progressBar;
+    private Set<String> websites = new HashSet<>();
 
 
     @Override
@@ -86,11 +93,13 @@ public class FirstFragment extends Fragment {
     }
 
     void showTopListDialog() {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity(), R.style.TopTenDialogTheme);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(requireActivity(), R.style.TopTenDialogTheme);
         builderSingle.setTitle(Html.fromHtml("<b>" + getString(R.string.alert_dialog_top_list_text) + "</b>"));
         builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                String strName = arrayAdapter.getItem(which);
+                webView.loadUrl(strName);
                 dialog.dismiss();
             }
         });
@@ -111,7 +120,7 @@ public class FirstFragment extends Fragment {
     }
 
     private void showSettingDialog() {
-        new AlertDialog.Builder(getActivity(), R.style.SettingDialogTheme)
+        new AlertDialog.Builder(requireActivity(), R.style.SettingDialogTheme)
                 .setMessage(R.string.alert_dialog_setting_text)
                 .setIcon(R.drawable.ic_warning)
                 .setPositiveButton(R.string.alert_dialog_setting_btn_positive, new DialogInterface.OnClickListener() {
@@ -158,18 +167,9 @@ public class FirstFragment extends Fragment {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             progressBar.setVisibility(View.GONE);
-            int limit = 5;
-            if(arrayAdapter.getCount()  == 0 ){
-                arrayAdapter.add(url);
-            }
-            else if (arrayAdapter.getCount() != 0 && arrayAdapter.getCount() <= limit) {
-                for (int i = 0; i < arrayAdapter.getCount(); i++) {
-                 if (!arrayAdapter.getItem(i).equals(url))
-                     arrayAdapter.add(url);
-                }
-            }
-
-            if (preferences.getBoolean(BLOCK_IMAGE_KEY, false) == true) {
+            websites.add(url);
+            arrayAdapter = new ArrayAdapter<>(requireContext(), R.layout.view_top_list_item,R.id.tv_item, new ArrayList<>(websites));
+            if (preferences.getBoolean(BLOCK_IMAGE_KEY, false)) {
                 setBlockNetworkImage();
             }
         }

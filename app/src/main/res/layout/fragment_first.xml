@@ -47,6 +47,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:hint="@string/hit_edit_text"
+                android:textSize="@dimen/text_small"
                 android:imeOptions="actionSearch"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
