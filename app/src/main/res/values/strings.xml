@@ -12,9 +12,9 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <!-- Alert Setting Dialog-->
-    <string name="alert_dialog_setting_text">"Are you sure you want to block Image of web site?"</string>
-    <string name="alert_dialog_setting_btn_positive">Yes</string>
-    <string name="alert_dialog_setting_btn_negative">No</string>
+    <string name="alert_dialog_setting_text">""Do you want to block Image of web site??"</string>
+    <string name="alert_dialog_setting_btn_positive">Yes, block it</string>
+    <string name="alert_dialog_setting_btn_negative">No, Don not block it</string>
 
     <!-- Alert Top List Dialog-->
     <string name="alert_dialog_top_list_text">"The last 5 domains"</string>

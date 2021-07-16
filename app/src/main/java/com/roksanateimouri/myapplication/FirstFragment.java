@@ -2,6 +2,7 @@ package com.roksanateimouri.myapplication;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,6 +36,8 @@ public class FirstFragment extends Fragment {
     private EditText etUrl;
     private SharedPreferences preferences;
     private ArrayAdapter<String> arrayAdapter;
+    private ProgressBar progressBar;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,8 +53,8 @@ public class FirstFragment extends Fragment {
         etUrl = view.findViewById(R.id.et_url);
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbarContact);
         preferences = getActivity().getSharedPreferences(BLOB_STORE_SERVICE, MODE_PRIVATE);
-
-        arrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.view_top_list_item, R.id.tv_item) ;
+        progressBar = new ProgressBar(getActivity());
+        arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.view_top_list_item, R.id.tv_item);
         return view;
     }
 
@@ -65,21 +69,25 @@ public class FirstFragment extends Fragment {
         switch (menuItem.getItemId()) {
             case R.id.action_settings:
                 showSettingDialog();
+                break;
             case R.id.action_Home:
                 home();
-                return true;
+                break;
             case R.id.action_refresh:
                 loading();
+                break;
             case R.id.action_top_list:
                 showTopListDialog();
+                break;
+            default:
                 break;
         }
         return false;
     }
 
     void showTopListDialog() {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity(),R.style.TopTenDialogTheme);
-        builderSingle.setTitle(Html.fromHtml("<b>"+getString(R.string.alert_dialog_top_list_text)+"</b>"));
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity(), R.style.TopTenDialogTheme);
+        builderSingle.setTitle(Html.fromHtml("<b>" + getString(R.string.alert_dialog_top_list_text) + "</b>"));
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -96,34 +104,38 @@ public class FirstFragment extends Fragment {
     }
 
     private void loading() {
+        progressBar.setVisibility(View.VISIBLE);
         WebSettings webSetting = webView.getSettings();
         webSetting.setBuiltInZoomControls(true);
         webView.setWebViewClient(new MyBrowser());
         webSetting.setJavaScriptEnabled(true);
-        webView.loadUrl(HOME_URL);
     }
 
     public void home() {
         loading();
+        webView.loadUrl(HOME_URL);
     }
+
     private void showSettingDialog() {
-        new AlertDialog.Builder(getActivity(),R.style.SettingDialogTheme)
-                .setMessage("Are you sure you want to block Image of web site?")
-                .setIcon( R.drawable.ic_warning)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(getActivity(), R.style.SettingDialogTheme)
+                .setMessage(R.string.alert_dialog_setting_text)
+                .setIcon(R.drawable.ic_warning)
+                .setPositiveButton(R.string.alert_dialog_setting_btn_positive, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         preferences.edit().putBoolean(BLOCK_IMAGE_KEY, true).apply();
                         dialog.cancel();
                     }
                 })
-                .setNegativeButton("Nok", new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.alert_dialog_setting_btn_negative, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
+                        preferences.edit().putBoolean(BLOCK_IMAGE_KEY, false).apply();
                         dialog.cancel();
                     }
                 })
                 .create()
                 .show();
     }
+
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         view.findViewById(R.id.btnForward).setOnClickListener(new View.OnClickListener() {
@@ -137,6 +149,12 @@ public class FirstFragment extends Fragment {
 
     private class MyBrowser extends WebViewClient {
         @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            progressBar.setVisibility(View.VISIBLE);
+        }
+
+        @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
@@ -145,10 +163,20 @@ public class FirstFragment extends Fragment {
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
+            progressBar.setVisibility(View.GONE);
+            int limit = 5;
+            if(arrayAdapter.getCount()  == 0 ){
+                arrayAdapter.add(url);
+            }
+            else if (arrayAdapter.getCount() != 0 && arrayAdapter.getCount() <= limit) {
+                for (int i = 0; i < arrayAdapter.getCount(); i++) {
+                 if (!arrayAdapter.getItem(i).equals(url))
+                     arrayAdapter.add(url);
+                }
+            }
 
-            arrayAdapter.add(url);
             if (preferences.getBoolean(BLOCK_IMAGE_KEY, false) == true) {
-              setBlockNetworkImage();
+                setBlockNetworkImage();
             }
         }
     }
